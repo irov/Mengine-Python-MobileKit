@@ -19,9 +19,10 @@ def onInitialize():
     from Foundation.ObjectManager import ObjectManager
 
     Types = [
-        "AdvertisingScene",
-        "Header",
-        "PopUp"
+        "AdvertisingScene"
+        , "Header"
+        , "Banner"
+        , "PopUp"
     ]
     if EntityManager.importEntities("MobileKit.Entities", Types) is False:
         return False

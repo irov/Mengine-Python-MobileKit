@@ -12,7 +12,7 @@ class SystemUserInterface(System):
         pass
 
     def _onRun(self):
-        self.addObserver(Notificator.onRun, self.__cbRun)
+        self.addObserver(Notificator.onRun, self._cbRun)
         return True
 
     def _onStop(self):
@@ -23,11 +23,11 @@ class SystemUserInterface(System):
 
     # observers
 
-    def __cbRun(self):
-        self._setTexts()    # very important
+    def _cbRun(self):
+        self._setTexts()
         return True
 
     # utils
 
     def _setTexts(self):
-        raise NotImplementedError
+        return
