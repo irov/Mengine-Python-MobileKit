@@ -3,7 +3,6 @@ from Foundation.Providers.AdvertisementProvider import AdvertisementProvider
 from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
-from Game.PopUpContents.Languages import Languages
 
 
 class Settings(PopUpContent):
@@ -36,7 +35,10 @@ class Settings(PopUpContent):
         # buttons
         if self.content.hasSlot("language") is True:
             self.buttons["language"] = _generateButton("Button", "language")
-            Languages.setBtnCurrentLocale()
+
+            locale = Mengine.getLocale()
+            text_id = "ID_Language_" + locale
+            Mengine.setTextAliasArguments("language", "$UIButtonText", text_id)
 
         if self.content.hasSlot("credits") is True:
             self.buttons["credits"] = _generateButton("Button", "credits")
