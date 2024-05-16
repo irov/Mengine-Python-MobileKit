@@ -20,7 +20,7 @@ class SystemPopUp(System):
 
     def _cbPopUpOpen(self, popup_id):
         if PopUpManager.hasPopUpContent(popup_id) is False:
-            Trace.log("Manager", 0, "{!r} doesnt exist in PopUpManager".format(popup_id))
+            Trace.log("Manager", 0, "popup_ip {!r} doesn't exist in PopUpManager".format(popup_id))
             return False
 
         PopUp = DemonManager.getDemon("PopUp")
@@ -49,18 +49,24 @@ class SystemPopUp(System):
         return False
 
     def _openPopUp(self, PopUp):
-        if PopUp.isEntityActivate() is False:
-            task_chain = TaskManager.createTaskChain()
-            with task_chain as tc:
-                tc.addTask('TaskSceneLayerGroupEnable', LayerName="PopUp", Value=True)
-                tc.addTask("TaskFadeIn", GroupName="FadeUI", To=0.5, Time=250.0)
+        if PopUp.isEntityActivate() is True:
+            return
+
+        if TaskManager.existTaskChain("PopUp_OpenFlow") is True:
+            return
+        with TaskManager.createTaskChain(Name="PopUp_OpenFlow") as tc:
+            tc.addTask('TaskSceneLayerGroupEnable', LayerName="PopUp", Value=True)
+            tc.addTask("TaskFadeIn", GroupName="FadeUI", To=0.5, Time=250.0)
 
     def _closePopUp(self, open_pop_ups):
-        if len(open_pop_ups) == 0:
-            task_chain = TaskManager.createTaskChain()
-            with task_chain as tc:
-                tc.addTask('TaskSceneLayerGroupEnable', LayerName="PopUp", Value=False)
-                tc.addTask("TaskFadeOut", GroupName="FadeUI", To=0.5, Time=250.0)
+        if len(open_pop_ups) != 0:
+            return
+
+        if TaskManager.existTaskChain("PopUp_CloseFlow") is True:
+            return
+        with TaskManager.createTaskChain(Name="PopUp_CloseFlow") as tc:
+            tc.addTask('TaskSceneLayerGroupEnable', LayerName="PopUp", Value=False)
+            tc.addTask("TaskFadeOut", GroupName="FadeUI", To=0.5, Time=250.0)
 
     def _cbSceneActivate(self, scene_name):
         PopUp = DemonManager.getDemon("PopUp")

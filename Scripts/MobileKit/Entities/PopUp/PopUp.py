@@ -27,14 +27,14 @@ class PopUp(BaseEntity):
                                Remove=PopUp._cbRemoveOpenPopUps)
 
     def _cbAppendOpenPopUps(self, index, popup_id):
-        print " [AppendOpenPopUps] index={}, popup_id={!r} OpenPopUps={}".format(index, popup_id, self.OpenPopUps)
+        # print " [AppendOpenPopUps] index={}, popup_id={!r} OpenPopUps={}".format(index, popup_id, self.OpenPopUps)
         self._update()
 
         prev_popup_id = self.OpenPopUps[index-1]
         self.contents[prev_popup_id].onDeactivate()
 
     def _cbRemoveOpenPopUps(self, index, popup_id, old):
-        print " [RemoveOpenPopUps] index={}, popup_id={!r}, old={}, OpenPopUps={}".format(index, popup_id, old, self.OpenPopUps)
+        # print " [RemoveOpenPopUps] index={}, popup_id={!r}, old={}, OpenPopUps={}".format(index, popup_id, old, self.OpenPopUps)
 
         self._update()
         self.contents[popup_id].onDeactivate()

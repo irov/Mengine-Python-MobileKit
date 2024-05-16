@@ -1,6 +1,5 @@
 from Foundation.Entity.BaseEntity import BaseEntity
 
-
 MOVIE_CONTENT_NAME = "Movie2_Content"
 
 
