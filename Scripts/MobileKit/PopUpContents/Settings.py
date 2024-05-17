@@ -37,8 +37,9 @@ class Settings(PopUpContent):
             self.buttons["language"] = _generateButton("Button", "language")
 
             locale = Mengine.getLocale()
-            text_id = "ID_Language_" + locale
-            Mengine.setTextAliasArguments("language", "$UIButtonText", text_id)
+            text_id = "ID_Language_" + str(locale)
+            text_arg = Mengine.getTextFromId(text_id)
+            Mengine.setTextAliasArguments("language", "$UIButtonText", text_arg)
 
         if self.content.hasSlot("credits") is True:
             self.buttons["credits"] = _generateButton("Button", "credits")
