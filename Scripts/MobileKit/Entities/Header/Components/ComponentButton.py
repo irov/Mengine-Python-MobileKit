@@ -29,7 +29,6 @@ class ComponentButton(HeaderComponent):
 
     def _runTaskChains(self):
         tc_name = "{}_{}".format(self.header.__class__.__name__, self.__class__.__name__)
-        print(tc_name)
         with self._createTaskChain(tc_name, Repeat=True) as tc:
             tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.movie, SocketName="socket")
             tc.addScope(self._scopeComponentLogic)
