@@ -35,6 +35,7 @@ def onInitialize():
         "Credits"
         , "Settings"
         , "TechSupport"
+        , "Languages"
     ]
     if PopUpManager.importPopUpContents("MobileKit.PopUpContents", PopUpContents) is False:
         return False
