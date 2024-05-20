@@ -22,20 +22,29 @@ class Credits(PopUpContent):
         if self.content is None:
             return
 
+        if self.content.hasSlot("data") is False:
+            return False
+        slot = self.content.getMovieSlot("data")
+
+        viewport = Mengine.getGameViewport()
+        game_width, game_height, top_offset, bottom_offset = AdjustableScreenUtils.getMainSizes()
+
+        x_center = viewport.begin.x + game_width / 2
+        y_center = viewport.begin.y + game_height / 2
+
+        slot.setWorldPosition(Mengine.vec2f(x_center,  viewport.begin.y))
+
         for param in CreditsManager.getParams():
-            group_name, prototype, offset, alias_id, text_id, slot = param.get()
+            group_name, prototype, offset, alias_id, text_id = param.get()
 
-            if self.content.hasSlot(slot):
-                credit_object = PrototypeManager.generateObjectUnique(prototype[7:])
-                credit_object.setEnable(True)
+            credit_object = PrototypeManager.generateObjectUnique(prototype[7:])
+            credit_object.setEnable(True)
 
-                slot = self.content.getMovieSlot(slot)
-                node = credit_object.getEntityNode()
-                node_pos = node.getWorldPosition()
-                node.removeFromParent()
-                slot.addChild(node)
+            node = credit_object.getEntityNode()
+            node.removeFromParent()
+            slot.addChild(node)
 
-                self.__adjustSlotPosition(slot, offset, node_pos)
+            credit_object.setPosition((0, offset))
 
     def _onActivate(self):
         self.content.setEnable(True)
@@ -45,12 +54,3 @@ class Credits(PopUpContent):
 
     def _onFinalize(self):
         self.content = None
-
-    def __adjustSlotPosition(self, slot, offset, node_pos):
-        viewport = Mengine.getGameViewport()
-        game_width, game_height, top_offset, bottom_offset = AdjustableScreenUtils.getMainSizes()
-
-        x_center = viewport.begin.x + game_width / 2
-        y_center = viewport.begin.y + game_height / 2
-
-        slot.setWorldPosition(Mengine.vec2f(x_center, node_pos[1] + offset))
