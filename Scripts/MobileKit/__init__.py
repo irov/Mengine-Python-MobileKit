@@ -41,6 +41,13 @@ def onInitialize():
     if PopUpManager.importPopUpContents("MobileKit.PopUpContents", PopUpContents) is False:
         return False
 
+    from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+
+    Headers = [
+        "Header"
+    ]
+    AdjustableScreenUtils.registerHeaders(Headers)
+
     # uncomment if you want to add new params for each account
     """
     from Foundation.AccountManager import AccountManager
