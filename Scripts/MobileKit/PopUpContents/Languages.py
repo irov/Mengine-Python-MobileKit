@@ -11,11 +11,15 @@ ALIAS_BUTTON_BLOCK = "$AliasButtonLangBlock"
 SLOT_LANG = "lang"
 BUTTON_PROTOTYPE = "Movie2Button_Language"
 
+COLOR_DARK_GRAY = (0.84, 0.84, 0.84, 1.0)
+COLOR_LIGHT_GRAY = (0.25, 0.24, 0.24, 1.0)
+
 
 class Languages(PopUpContent):
 
     popup_id = "languages"
     title_text_id = "ID_PopUp_Language"
+    content_movie_name = "Movie2_Content_Language"
 
     def __init__(self):
         super(Languages, self).__init__()
@@ -33,14 +37,8 @@ class Languages(PopUpContent):
         self._offset_y = None
 
     def _onInitialize(self):
-        self.content = self.owner.object.getObject("Movie2_Content_Language")
-
-        if self.content is None:
-            Trace.log("Entity", 0, "Not found Movie2_Content in Language")
-            return
-
-        self._color_text_button_idle = DefaultManager.getDefaultTuple("ColorTextButtonIdle", (0.84, 0.84, 0.84, 1.0))
-        self._color_text_button_block = DefaultManager.getDefaultTuple("ColorTextButtonBlock", (0.25, 0.24, 0.24, 1.0))
+        self._color_text_button_idle = DefaultManager.getDefaultTuple("PopUpLanguagesColorTextButtonIdle", COLOR_DARK_GRAY)
+        self._color_text_button_block = DefaultManager.getDefaultTuple("PopUpLanguagesColorTextButtonBlock", COLOR_LIGHT_GRAY)
 
         self._offset_top = DefaultManager.getDefaultFloat("LanguagesOffsetTop", 100.0)
         self._offset_x = DefaultManager.getDefaultFloat("LanguagesOffsetX", 245.0)

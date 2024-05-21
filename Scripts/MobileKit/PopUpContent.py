@@ -2,8 +2,9 @@ from Foundation.Initializer import Initializer
 
 
 class PopUpContent(Initializer):
-    popup_id = None
-    title_text_id = None
+    popup_id = None             # type: str
+    title_text_id = None        # type: str
+    content_movie_name = None   # type: str
 
     def __init__(self):
         super(PopUpContent, self).__init__()
@@ -20,6 +21,13 @@ class PopUpContent(Initializer):
 
     def onInitialize(self, owner):
         self.owner = owner
+        self.content = self.owner.object.getObject(self.content_movie_name)
+
+        if self.content is None:
+            Trace.log("PopUp", 0, "Not found {!r} in {!r}".format(self.content_movie_name, self.owner.getName()))
+            self._initialized = None    # means not initialized yet
+            return False
+
         super(PopUpContent, self).onInitialize()
 
     def _onInitialize(self):
@@ -27,6 +35,10 @@ class PopUpContent(Initializer):
         raise NotImplementedError
 
     def onPreparation(self):
+        if self.isInitialized() is False:
+            Trace.log("PopUp", 0, "Content {!r} must be initialized before onPreparation".format(self.__class__.__name__))
+            return
+
         self._onPreparation()
         self._prepared = True
 
@@ -35,6 +47,10 @@ class PopUpContent(Initializer):
         raise NotImplementedError
 
     def onActivate(self):
+        if self.isPrepared() is False:
+            Trace.log("PopUp", 0, "Content {!r} must be prepared before onActivate".format(self.__class__.__name__))
+            return
+
         self._onActivate()
         self._activate = True
 
@@ -43,6 +59,10 @@ class PopUpContent(Initializer):
         raise NotImplementedError
 
     def onDeactivate(self):
+        if self.isActivated() is False:
+            Trace.log("PopUp", 0, "Content {!r} must be activated before onDeactivate".format(self.__class__.__name__))
+            return
+
         self._onDeactivate()
         self._activate = False
 
@@ -52,7 +72,7 @@ class PopUpContent(Initializer):
 
     def onFinalize(self):
         super(PopUpContent, self).onFinalize()
-        self._initialized = None
+        self._initialized = None    # allows to initialize again
 
     def _onFinalize(self):
         """ here we destroy objects that we created in onPreparation if needed """

@@ -9,6 +9,7 @@ PLAYFAB_ID_BOOL = Mengine.getGameParamBool("ShowPlayFabId", True)
 class TechSupport(PopUpContent):
     popup_id = "tech_support"
     title_text_id = "ID_PopUp_TechSupport"
+    content_movie_name = "Movie2_Content_TechSupport"
 
     def __init__(self):
         super(TechSupport, self).__init__()
@@ -17,11 +18,7 @@ class TechSupport(PopUpContent):
         self.buttons = {}
 
     def _onInitialize(self):
-        self.content = self.owner.object.getObject("Movie2_Content_TechSupport")
-
-        if self.content is None:
-            Trace.log("Entity", 0, "Not found Movie2_Content in TechSupport")
-            return
+        return
 
     def _onPreparation(self):
         def _attachTo(slot, obj):

@@ -89,6 +89,11 @@ class PopUp(BaseEntity):
         node = btn.getEntityNode()
         slot.addChild(node)
 
+    def getContentBoundingBox(self):
+        """ returns bounding box which is used for content positioning """
+        bounding_box = self._content.getCompositionBounds()
+        return bounding_box
+
     # view
 
     def _loadContent(self):

@@ -12,6 +12,7 @@ def onInitialize():
 
     Traces = [
         "HeaderComponent"
+        , "PopUp"
     ]
     TraceManager.addTraces(Traces)
 

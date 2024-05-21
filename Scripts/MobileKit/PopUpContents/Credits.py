@@ -7,16 +7,13 @@ from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
 class Credits(PopUpContent):
     popup_id = "credits"
     title_text_id = "ID_PopUp_Credits"
+    content_movie_name = "Movie2_Content_Credits"
 
     def __init__(self):
         super(Credits, self).__init__()
 
     def _onInitialize(self):
-        self.content = self.owner.object.getObject("Movie2_Content_Credits")
-
-        if self.content is None:
-            Trace.log("Entity", 0, "Not found Movie2_Content in Credits")
-            return
+        return
 
     def _onPreparation(self):
         if self.content is None:

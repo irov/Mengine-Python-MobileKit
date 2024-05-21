@@ -8,6 +8,7 @@ from MobileKit.PrototypeManager import PrototypeManager
 class Settings(PopUpContent):
     popup_id = "settings"
     title_text_id = "ID_PopUp_Settings"
+    content_movie_name = "Movie2_Content_Settings"
 
     def __init__(self):
         super(Settings, self).__init__()
@@ -16,11 +17,7 @@ class Settings(PopUpContent):
         self.checkboxes = {}
 
     def _onInitialize(self):
-        self.content = self.owner.object.getObject("Movie2_Content_Settings")
-
-        if self.content is None:
-            Trace.log("Entity", 0, "Not found Movie2_Content in Settings")
-            return
+        return
 
     def _onPreparation(self):
         if self.content is None:
