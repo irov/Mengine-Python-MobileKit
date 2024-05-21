@@ -1,7 +1,7 @@
 from MobileKit.PopUpContent import PopUpContent
-from Game.LanguagesManager import LanguagesManager
-from Foundation.SystemManager import SystemManager
 from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+# todo: from Foundation.LanguagesManager import LanguagesManager
+from Foundation.SystemManager import SystemManager
 from Foundation.TaskManager import TaskManager
 from Foundation.DefaultManager import DefaultManager
 
@@ -85,43 +85,37 @@ class Languages(PopUpContent):
         return tc
 
     def _generateLangButtons(self):
+        if self._checkSlot(SLOT_LANG) is False:
+            return
+
         def _generateButton(text_id):
             env = BUTTON_PROTOTYPE + "_" + lang
             button = self.owner.object.tryGenerateObjectUnique(env, BUTTON_PROTOTYPE)
             button.setTextAliasEnvironment(env)
 
             for movie in button.eachMovies():
-                if movie.entity.hasMovieText(ALIAS_BUTTON_IDLE):
-                    text_alias = movie.entity.getMovieText(ALIAS_BUTTON_IDLE)
-                    if text_alias is None:
-                        Trace.log("Entity", 0, "movie.getMovieText(text_id) is None")
-
-                    text_alias.setFontColor(self._color_text_button_idle)
+                if movie.setupMovieTextColor(ALIAS_BUTTON_IDLE, self._color_text_button_idle) is True:
                     Mengine.setTextAlias(env, ALIAS_BUTTON_IDLE, text_id)
 
-                elif movie.entity.hasMovieText(ALIAS_BUTTON_BLOCK):
-                    text_alias = movie.entity.getMovieText(ALIAS_BUTTON_BLOCK)
-                    if text_alias is None:
-                        Trace.log("Entity", 0,
-                                  "movie.getMovieText(text_id) is None")
-
-                    text_alias.setFontColor(self._color_text_button_block)
+                elif movie.setupMovieTextColor(ALIAS_BUTTON_BLOCK, self._color_text_button_block) is True:
                     Mengine.setTextAlias(env, ALIAS_BUTTON_BLOCK, text_id)
 
                 else:
-                    Trace.log("Entity", 0,
-                              "[Languages] button movie state {!r} should have {!r} or {!r} text aliases".format(
-                                  movie.name, ALIAS_BUTTON_IDLE, ALIAS_BUTTON_BLOCK))
+                    Trace.log("PopUp", 0, "[Languages] button movie state {!r} should have {!r} or {!r} text aliases"
+                              .format(movie.name, ALIAS_BUTTON_IDLE, ALIAS_BUTTON_BLOCK))
 
             button.setEnable(True)
             return button
 
-        if self._checkSlot(SLOT_LANG) is False:
-            return
-
         slot_lang_start = self.content.getMovieSlot(SLOT_LANG)
         _, _, top_offset, _, viewport, x_center, _ = AdjustableScreenUtils.getMainSizesExt()
         slot_lang_start.setWorldPosition(Mengine.vec2f(x_center, viewport.begin.y + top_offset + self._offset_top))
+
+        try:
+            from Game.LanguagesManager import LanguagesManager   # fixme
+        except ImportError:
+            Trace.log("PopUp", 0, "Not found module Game.LanguagesManager (fixme)")
+            return
 
         lang_params = LanguagesManager.getParams()
 
@@ -172,7 +166,7 @@ class Languages(PopUpContent):
 
     def _checkSlot(self, slot_name):
         if self.content.hasSlot(slot_name) is False:
-            Trace.log("Entity", 0, "Slot {!r} not found in {!r}".format(slot_name, self.content.getName()))
+            Trace.log("PopUp", 0, "Slot {!r} not found in {!r}".format(slot_name, self.content.getName()))
             return False
 
         return True
