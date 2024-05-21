@@ -11,7 +11,7 @@ class CreditsManager(Manager):
         orms = DatabaseManager.getDatabaseORMs("Database", "Credits")
 
         for orm in orms:
-            if GroupManager.hasPrototype(orm.group_name, orm.prototype):
+            if GroupManager.hasPrototype(orm.GroupName, orm.Movie2Prototype):
                 CreditsManager.s_orms.append(orm)
 
         return True
