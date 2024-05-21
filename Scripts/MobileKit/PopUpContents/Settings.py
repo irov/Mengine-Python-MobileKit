@@ -13,7 +13,6 @@ class Settings(PopUpContent):
 
     def __init__(self):
         super(Settings, self).__init__()
-        self.tcs = []
         self.buttons = {}
         self.checkboxes = {}
 
@@ -74,7 +73,7 @@ class Settings(PopUpContent):
         if self.checkboxes.get("sound") is not None:
             checkbox_sound = self.checkboxes["sound"]
 
-            with self._createTaskChain("MuteSound", Repeat=True) as tc:
+            with self.createTaskChain("MuteSound", Repeat=True) as tc:
                 with tc.addRaceTask(2) as (true, false):
                     true.addTask("TaskMovie2CheckBox", Movie2CheckBox=checkbox_sound, Value=True)
                     true.addScope(self._scopeMuteSoundHandler, checkbox_sound, True)
@@ -85,7 +84,7 @@ class Settings(PopUpContent):
         if self.checkboxes.get("music") is not None:
             checkbox_music = self.checkboxes["music"]
 
-            with self._createTaskChain("MuteMusic", Repeat=True) as tc:
+            with self.createTaskChain("MuteMusic", Repeat=True) as tc:
                 with tc.addRaceTask(2) as (true, false):
                     true.addTask("TaskMovie2CheckBox", Movie2CheckBox=checkbox_music, Value=True)
                     true.addScope(self._scopeMuteMusicHandler, checkbox_music, True)
@@ -94,37 +93,29 @@ class Settings(PopUpContent):
                     false.addScope(self._scopeMuteMusicHandler, checkbox_music, False)
 
         if self.buttons["language"] is not None:
-            with self._createTaskChain("Languages", Repeat=True) as tc:
+            with self.createTaskChain("Languages", Repeat=True) as tc:
                 tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.buttons["language"].movie)
                 tc.addScope(self._scopeLanguage)
 
         if self.buttons["credits"] is not None:
-            with self._createTaskChain("Credits", Repeat=True) as tc:
+            with self.createTaskChain("Credits", Repeat=True) as tc:
                 tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.buttons["credits"].movie)
                 tc.addScope(self._scopeCredits)
 
         if self.buttons["techsupport"] is not None:
-            with self._createTaskChain("TechSupport", Repeat=True) as tc:
+            with self.createTaskChain("TechSupport", Repeat=True) as tc:
                 tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.buttons["techsupport"].movie)
                 tc.addScope(self._scopeTechSupport)
 
         if self.buttons["terms"] is not None:
-            with self._createTaskChain("ConsentFlow", Repeat=True) as tc:
+            with self.createTaskChain("ConsentFlow", Repeat=True) as tc:
                 tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.buttons["terms"].movie)
                 tc.addScope(self._scopeConsentSettingsButton)
 
     def _onDeactivate(self):
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
-
         self.content.setEnable(False)
 
     def _onFinalize(self):
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
-
         for button in self.buttons.values():
             button.onDestroy()
         self.buttons = {}
@@ -132,8 +123,6 @@ class Settings(PopUpContent):
         for checkbox in self.checkboxes.values():
             checkbox.returnToParent()
         self.checkboxes = {}
-
-        self.content = None
 
     def __adjustSlotsPosition(self):
         viewport = Mengine.getGameViewport()
@@ -178,11 +167,6 @@ class Settings(PopUpContent):
     def __getAllObjects(self):
         return self.buttons.items() + self.checkboxes.items()
 
-    def _createTaskChain(self, name, **params):
-        tc = TaskManager.createTaskChain(Name="Settings_"+name, **params)
-        self.tcs.append(tc)
-        return tc
-
     @staticmethod
     def _getMuteSoundSetting():
         return Mengine.getCurrentAccountSettingBool("MuteSound")
@@ -206,6 +190,7 @@ class Settings(PopUpContent):
         Mengine.setTextAliasArguments("language", alias_id, text_arg)
 
     # scopes
+
     def _scopeMuteSoundHandler(self, source, checkbox, value):
         source.addFunction(checkbox.setParam, "Value", value)
         source.addFunction(Mengine.changeCurrentAccountSetting, "MuteSound", unicode(value))

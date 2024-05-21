@@ -1,4 +1,5 @@
 from Foundation.Initializer import Initializer
+from Foundation.TaskManager import TaskManager
 
 
 class PopUpContent(Initializer):
@@ -12,6 +13,7 @@ class PopUpContent(Initializer):
         self._prepared = False
         self._activate = False
         self.owner = None
+        self.tcs = []
 
     def isPrepared(self):
         return self._prepared is True
@@ -63,17 +65,32 @@ class PopUpContent(Initializer):
             Trace.log("PopUp", 0, "Content {!r} must be activated before onDeactivate".format(self.__class__.__name__))
             return
 
+        for tc in self.tcs:
+            tc.cancel()
+        self.tcs = []
+
         self._onDeactivate()
         self._activate = False
 
     def _onDeactivate(self):
-        """ here we deactivate objects (disable, stop animations, etc.) and cancel tasks here """
+        """ here we deactivate objects (disable, stop animations, etc.) + auto tcs canceling """
         raise NotImplementedError
 
     def onFinalize(self):
+        for tc in self.tcs:
+            tc.cancel()
+        self.tcs = []
+
         super(PopUpContent, self).onFinalize()
+        self.content = None
+
         self._initialized = None    # allows to initialize again
 
     def _onFinalize(self):
-        """ here we destroy objects that we created in onPreparation if needed """
+        """ here we destroy objects that we created in onPreparation if needed + auto tcs canceling """
         raise NotImplementedError
+
+    def createTaskChain(self, name, **params):
+        tc = TaskManager.createTaskChain(Name="PopUpContent_"+self.__class__.__name__+"_"+name, **params)
+        self.tcs.append(tc)
+        return tc

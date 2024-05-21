@@ -23,9 +23,6 @@ class Languages(PopUpContent):
 
     def __init__(self):
         super(Languages, self).__init__()
-        self.content = None
-        self.tcs = []
-
         self.buttons_lang = {}
         self.buttons_list = []
 
@@ -54,35 +51,22 @@ class Languages(PopUpContent):
     def _onActivate(self):
         self.content.setEnable(True)
 
-        if len(self.buttons_lang) != 0:
-            with self._createTaskChain(SLOT_LANG) as tc:
-                for (lang, button), tc_race in tc.addRaceTaskList(self.buttons_lang.items()):
-                    tc_race.addTask("TaskMovie2ButtonClick", Movie2Button=button)
-                    tc_race.addFunction(self._changeLocale, lang)
+        if len(self.buttons_lang) == 0:
+            return
+
+        with self.createTaskChain("Main") as tc:
+            for (lang, button), tc_race in tc.addRaceTaskList(self.buttons_lang.items()):
+                tc_race.addTask("TaskMovie2ButtonClick", Movie2Button=button)
+                tc_race.addFunction(self._changeLocale, lang)
 
     def _onDeactivate(self):
         self.content.setEnable(False)
 
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
-
     def _onFinalize(self):
-        self.content = None
-
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
-
         for button in self.buttons_lang.values():
             button.onDestroy()
         self.buttons_lang = {}
         self.buttons_list = []
-
-    def _createTaskChain(self, name, **params):
-        tc = TaskManager.createTaskChain(Name="Stats_"+name, **params)
-        self.tcs.append(tc)
-        return tc
 
     def _generateLangButtons(self):
         if self._checkSlot(SLOT_LANG) is False:

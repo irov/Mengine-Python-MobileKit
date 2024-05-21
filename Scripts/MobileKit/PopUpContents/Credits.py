@@ -50,4 +50,4 @@ class Credits(PopUpContent):
         self.content.setEnable(False)
 
     def _onFinalize(self):
-        self.content = None
+        return

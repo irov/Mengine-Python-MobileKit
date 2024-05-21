@@ -78,7 +78,8 @@ class PopUp(BaseEntity):
         self.buttons = {}
 
         for popup_content in self.contents.values():
-            popup_content.onDeactivate()
+            if popup_content.isActivated() is True:
+                popup_content.onDeactivate()
             popup_content.onFinalize()
         self.contents = {}
 

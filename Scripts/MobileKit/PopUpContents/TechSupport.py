@@ -1,4 +1,3 @@
-from Foundation.TaskManager import TaskManager
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
 
@@ -13,7 +12,6 @@ class TechSupport(PopUpContent):
 
     def __init__(self):
         super(TechSupport, self).__init__()
-        self.tcs = []
         self.movies = {}
         self.buttons = {}
 
@@ -51,23 +49,14 @@ class TechSupport(PopUpContent):
         self.content.setEnable(True)
 
         if self.buttons["send_mail"] is not None:
-            with self._createTaskChain("send_mail") as tc:
+            with self.createTaskChain("send_mail") as tc:
                 tc.addTask("TaskMovie2ButtonClick", Movie2Button=self.buttons["send_mail"].movie)
                 tc.addScope(self._scopeBugReport)
 
     def _onDeactivate(self):
         self.content.setEnable(False)
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
 
     def _onFinalize(self):
-        self.content = None
-
-        for tc in self.tcs:
-            tc.cancel()
-        self.tcs = []
-
         for movie in self.movies.values():
             movie.onDestroy()
         self.movies = {}
@@ -84,12 +73,8 @@ class TechSupport(PopUpContent):
 
         return True
 
-    def _createTaskChain(self, name, **params):
-        tc = TaskManager.createTaskChain(Name="Stats_"+name, **params)
-        self.tcs.append(tc)
-        return tc
-
     # -- Contact us button
+
     def _scopeBugReport(self, source):
         source.addDelay(300)
         source.addFunction(self.sendSupportMail)
