@@ -88,17 +88,17 @@ class Languages(PopUpContent):
         if self._checkSlot(SLOT_LANG) is False:
             return
 
-        def _generateButton(text_id):
-            env = BUTTON_PROTOTYPE + "_" + lang
+        def _generateButton(_text_id, _locale):
+            env = BUTTON_PROTOTYPE + "_" + _locale
             button = self.owner.object.tryGenerateObjectUnique(env, BUTTON_PROTOTYPE)
             button.setTextAliasEnvironment(env)
 
             for movie in button.eachMovies():
                 if movie.setupMovieTextColor(ALIAS_BUTTON_IDLE, self._color_text_button_idle) is True:
-                    Mengine.setTextAlias(env, ALIAS_BUTTON_IDLE, text_id)
+                    Mengine.setTextAlias(env, ALIAS_BUTTON_IDLE, _text_id)
 
                 elif movie.setupMovieTextColor(ALIAS_BUTTON_BLOCK, self._color_text_button_block) is True:
-                    Mengine.setTextAlias(env, ALIAS_BUTTON_BLOCK, text_id)
+                    Mengine.setTextAlias(env, ALIAS_BUTTON_BLOCK, _text_id)
 
                 else:
                     Trace.log("PopUp", 0, "[Languages] button movie state {!r} should have {!r} or {!r} text aliases"
@@ -120,16 +120,16 @@ class Languages(PopUpContent):
         lang_params = LanguagesManager.getParams()
 
         for param in lang_params:
-            text, lang = param.get()
+            text_id, locale = param.get()
 
-            btn_lang_obj = _generateButton(text)
+            btn_lang_obj = _generateButton(text_id, locale)
             btn_lang_obj_node = btn_lang_obj.getEntityNode()
             slot_lang_start.addChild(btn_lang_obj_node)
 
-            if Mengine.getLocale() == lang:
+            if Mengine.getLocale() == locale:
                 btn_lang_obj.setBlock(True)
 
-            self.buttons_lang[lang] = btn_lang_obj
+            self.buttons_lang[locale] = btn_lang_obj
             self.buttons_list.append(btn_lang_obj)
 
     def _setButtonsPosition(self):

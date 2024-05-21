@@ -1,3 +1,4 @@
+from Foundation.DefaultManager import DefaultManager
 from Foundation.TaskManager import TaskManager
 from Foundation.Providers.AdvertisementProvider import AdvertisementProvider
 from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
@@ -33,10 +34,8 @@ class Settings(PopUpContent):
         if self.content.hasSlot("language") is True:
             self.buttons["language"] = _generateButton("Button", "language")
 
-            locale = Mengine.getLocale()
-            text_id = "ID_Language_" + str(locale)
-            text_arg = Mengine.getTextFromId(text_id)
-            Mengine.setTextAliasArguments("language", "$UIButtonText", text_arg)
+            if DefaultManager.getDefaultBool("PopUpSettingsShowCurrentLocale", False) is True:
+                self._showCurrentLocale()
 
         if self.content.hasSlot("credits") is True:
             self.buttons["credits"] = _generateButton("Button", "credits")
@@ -191,6 +190,20 @@ class Settings(PopUpContent):
     @staticmethod
     def _getMuteMusicSetting():
         return Mengine.getCurrentAccountSettingBool("MuteMusic")
+
+    def _showCurrentLocale(self):
+        text_id_template = DefaultManager.getDefault("PopUpSettingsCurrentLocaleTextIdTemplate", "ID_Language_{locale}")
+        locale = str(Mengine.getLocale())
+
+        text_id = text_id_template.format(locale=locale)
+        if Mengine.existText(text_id) is True:
+            text_arg = Mengine.getTextFromId(text_id)
+        else:
+            Trace.log("PopUp", 0, "Not found text_id {!r} for locale {!r}".format(text_id, locale))
+            text_arg = locale
+
+        alias_id = DefaultManager.getDefault("PopUpSettingsCurrentLocaleAliasId", "$UIButtonText")
+        Mengine.setTextAliasArguments("language", alias_id, text_arg)
 
     # scopes
     def _scopeMuteSoundHandler(self, source, checkbox, value):
