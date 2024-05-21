@@ -59,7 +59,7 @@ class AdjustableScreenUtils(object):
         for header_name in AdjustableScreenUtils.__headers:
             demon = DemonManager.getDemon(header_name)
             if demon.isActive() is True:
-                return demon
+                return demon.getHeight()
         return 0.0
 
     @staticmethod
