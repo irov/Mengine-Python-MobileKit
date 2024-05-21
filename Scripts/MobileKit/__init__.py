@@ -41,6 +41,13 @@ def onInitialize():
     if PopUpManager.importPopUpContents("MobileKit.PopUpContents", PopUpContents) is False:
         return False
 
+    PopUpContents = [
+        "Profile"
+    ]
+
+    if PopUpManager.importPopUpContents("Game.PopUpContents", PopUpContents) is False:
+        return False
+
     from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
 
     Headers = [
