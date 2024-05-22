@@ -31,17 +31,17 @@ class Settings(PopUpContent):
 
         # buttons
         if self.content.hasSlot("language") is True:
-            self.buttons["language"] = _generateButton("Button", "language")
+            self.buttons["language"] = _generateButton("LightGray", "language")
 
             if DefaultManager.getDefaultBool("PopUpSettingsShowCurrentLocale", False) is True:
                 self._showCurrentLocale()
 
         if self.content.hasSlot("credits") is True:
-            self.buttons["credits"] = _generateButton("Button", "credits")
+            self.buttons["credits"] = _generateButton("LightGray", "credits")
         if self.content.hasSlot("terms") is True:
-            self.buttons["terms"] = _generateButton("Button", "terms")
+            self.buttons["terms"] = _generateButton("LightGray", "terms")
         if self.content.hasSlot("techsupport") is True:
-            self.buttons["techsupport"] = _generateButton("Button", "techsupport")
+            self.buttons["techsupport"] = _generateButton("LightGray", "techsupport")
 
         # checkboxes
         if self.content.hasSlot("sound"):
