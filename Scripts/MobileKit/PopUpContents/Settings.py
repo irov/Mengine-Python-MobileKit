@@ -131,8 +131,9 @@ class Settings(PopUpContent):
         x_center = viewport.begin.x + game_width / 2
         y_center = viewport.begin.y + game_height / 2
 
-        # transitions
-        y_bottom_transitions = viewport.end.y - bottom_offset - game_height * 0.22
+        popup_content = self.owner.object.getObject("Movie2_Content")
+        content_box = popup_content.getCompositionBounds()
+
         transition_height = 150.0
 
         for i, button_name in enumerate(["terms",  "credits", "techsupport", "language"]):
@@ -140,11 +141,10 @@ class Settings(PopUpContent):
                 slot = self.content.getMovieSlot(button_name)
                 slot.setWorldPosition(Mengine.vec2f(
                     x_center,
-                    y_bottom_transitions - (20 + transition_height) * i
+                    viewport.end.y + content_box.minimum.y + 100 - (25 + transition_height) * i
                 ))
 
         left_border_pos = x_center - game_width / 2
-        top_border_pos = viewport.begin.y + top_offset * 2
 
         # checkboxes setup
         checkbox_sector_width = game_width / 2
@@ -162,7 +162,8 @@ class Settings(PopUpContent):
                 checkbox_pos_x -= 140
 
             slot_checkbox = self.content.getMovieSlot(checkbox_name)
-            slot_checkbox.setWorldPosition(Mengine.vec2f(checkbox_pos_x, top_border_pos * 1.55))
+            slot_checkbox.setWorldPosition(Mengine.vec2f(checkbox_pos_x,
+                                                         viewport.begin.y + content_box.maximum.y + 150))
 
     def __getAllObjects(self):
         return self.buttons.items() + self.checkboxes.items()

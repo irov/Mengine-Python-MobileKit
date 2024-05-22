@@ -1,6 +1,7 @@
 from Foundation.Entity.BaseEntity import BaseEntity
 from Foundation.TaskManager import TaskManager
 from MobileKit.PopUpManager import PopUpManager
+from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
 
 SLOT_CLOSE = "close"
 SLOT_BACK = "back"
@@ -46,6 +47,8 @@ class PopUp(BaseEntity):
 
         self._content = self.object.getObject("Movie2_Content")
         self._content.setInteractive(True)
+
+        self._setPosition()
 
         button_close = self.object.tryGenerateObjectUnique("close", "Movie2Button_Close")
         self._attachTo(button_close, SLOT_CLOSE)
@@ -136,6 +139,16 @@ class PopUp(BaseEntity):
         current_popup_content = self.contents[current_popup_id]
         Mengine.setTextAlias("", POPUP_TITLE_ALIAS, current_popup_content.title_text_id)
 
+    def _setPosition(self):
+        viewport = Mengine.getGameViewport()
+        game_width, game_height, top_offset, bottom_offset = AdjustableScreenUtils.getMainSizes()
+
+        x_center = viewport.begin.x + game_width / 2
+        y_center = viewport.begin.y + game_height / 2
+
+        self._content.getEntityNode().setWorldPosition(Mengine.vec2f(x_center, y_center))
+
+
     # scopes
 
     def _scopeCloseLastContent(self, source):
@@ -143,4 +156,6 @@ class PopUp(BaseEntity):
         last_popup_id = open_popups[-1]
 
         source.addNotify(Notificator.onPopUpClose, last_popup_id)
+
+
 

@@ -1,5 +1,6 @@
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
+from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
 
 BUILD_VERSION_BOOL = Mengine.getGameParamBool("ShowBuildVersion", True)
 PLAYFAB_ID_BOOL = Mengine.getGameParamBool("ShowPlayFabId", True)
@@ -15,6 +16,9 @@ class TechSupport(PopUpContent):
         self.movies = {}
         self.buttons = {}
 
+        self.game_name_txt = None
+        self.question_txt = None
+
     def _onInitialize(self):
         return
 
@@ -27,7 +31,7 @@ class TechSupport(PopUpContent):
             slot_obj.addChild(node)
 
         if self.content.hasSlot("send_mail") is True:
-            self.buttons["send_mail"] = PrototypeManager.generateObjectContainer("Button")
+            self.buttons["send_mail"] = PrototypeManager.generateObjectContainer("LightGray")
             self.buttons["send_mail"].setTextAliasEnvironment("contact_us")
             _attachTo("send_mail", self.buttons["send_mail"])
             self.buttons["send_mail"].setEnable(True)
@@ -45,8 +49,15 @@ class TechSupport(PopUpContent):
             _attachTo("playfab_id", playfab_id)
             self.movies["playfab_id"] = playfab_id
 
+        self.question_txt = self.owner.object.getObject("Movie2_QuestionTxt")
+        self.game_name_txt = self.owner.object.getObject("Movie2_GameNameTxt")
+
+        self.__adjustSlotsPositions()
+
     def _onActivate(self):
         self.content.setEnable(True)
+        self.question_txt.setEnable(True)
+        self.game_name_txt.setEnable(True)
 
         if self.buttons["send_mail"] is not None:
             with self.createTaskChain("send_mail") as tc:
@@ -57,6 +68,9 @@ class TechSupport(PopUpContent):
         self.content.setEnable(False)
 
     def _onFinalize(self):
+        self.game_name_txt = None
+        self.question_txt = None
+
         for movie in self.movies.values():
             movie.onDestroy()
         self.movies = {}
@@ -73,7 +87,34 @@ class TechSupport(PopUpContent):
 
         return True
 
-    # -- Contact us button
+    def __adjustSlotsPositions(self):
+        _, game_height, _, bottom_offset, viewport, x_center, y_center = AdjustableScreenUtils.getMainSizesExt()
+
+        y_bottom_transitions = viewport.end.y - bottom_offset - game_height * 0.09
+        transition_height = 185.0
+
+        popup_content = self.owner.object.getObject("Movie2_Content")
+        content_box = popup_content.getCompositionBounds()
+
+        slot = self.content.getMovieSlot("send_mail")
+        slot.setWorldPosition(Mengine.vec2f(
+            x_center,  viewport.end.y + content_box.minimum.y + 100))
+
+        slot = self.content.getMovieSlot("build_version")
+        slot.setWorldPosition(Mengine.vec2f(
+            x_center, viewport.begin.y + content_box.maximum.y + 300))
+
+        slot = self.content.getMovieSlot("playfab_id")
+        slot.setWorldPosition(Mengine.vec2f(
+            x_center, viewport.begin.y + content_box.maximum.y + 200))
+
+        node = self.question_txt.getEntityNode()
+        node.setWorldPosition(Mengine.vec2f(
+            x_center,  viewport.end.y + content_box.minimum.y - 80))
+
+        node = self.game_name_txt.getEntityNode()
+        node.setWorldPosition(Mengine.vec2f(
+            x_center, viewport.begin.y + content_box.maximum.y + 100))
 
     def _scopeBugReport(self, source):
         source.addDelay(300)
