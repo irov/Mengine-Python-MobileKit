@@ -66,6 +66,8 @@ class TechSupport(PopUpContent):
 
     def _onDeactivate(self):
         self.content.setEnable(False)
+        self.question_txt.setEnable(False)
+        self.game_name_txt.setEnable(False)
 
     def _onFinalize(self):
         self.game_name_txt = None
