@@ -157,9 +157,9 @@ class Settings(PopUpContent):
             checkbox_pos_x = left_border_pos + checkbox_sector_width_half + (checkbox_sector_width * i)
 
             if checkbox_pos_x < x_center:
-                checkbox_pos_x += 140
+                checkbox_pos_x += 100
             if checkbox_pos_x > x_center:
-                checkbox_pos_x -= 140
+                checkbox_pos_x -= 100
 
             slot_checkbox = self.content.getMovieSlot(checkbox_name)
             slot_checkbox.setWorldPosition(Mengine.vec2f(checkbox_pos_x,
