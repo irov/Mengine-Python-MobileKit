@@ -19,7 +19,6 @@ class CreditsManager(Manager):
 
     @staticmethod
     def getParams():
-        print "get params --- credits manager"
         if len(CreditsManager.s_orms) == 0:
             Trace.log("Manager", 0, "Languages params is empty!")
 

@@ -45,11 +45,13 @@ class Settings(PopUpContent):
 
         # checkboxes
         if self.content.hasSlot("sound"):
-            self.checkboxes["sound"] = self.owner.object.getObject("Movie2CheckBox_MuteSound")
+            name ="sound_checkbox"
+            self.checkboxes["sound"] = self.owner.object.tryGenerateObjectUnique(name, "Movie2CheckBox_MuteSound")
             self.checkboxes["sound"].setParam("Value", self._getMuteSoundSetting())
 
         if self.content.hasSlot("music"):
-            self.checkboxes["music"] = self.owner.object.getObject("Movie2CheckBox_MuteMusic")
+            name = "music_checkbox"
+            self.checkboxes["music"] = self.owner.object.tryGenerateObjectUnique(name,  "Movie2CheckBox_MuteMusic")
             self.checkboxes["music"].setParam("Value", self._getMuteMusicSetting())
 
         # attach to slots
