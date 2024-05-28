@@ -1,6 +1,7 @@
 from Foundation.System import System
 from Foundation.DemonManager import DemonManager
 from Foundation.TaskManager import TaskManager
+from Foundation.SceneManager import SceneManager
 from MobileKit.PopUpManager import PopUpManager
 
 
@@ -49,6 +50,10 @@ class SystemPopUp(System):
         return False
 
     def _openPopUp(self, PopUp):
+        if PopUp.hasEntity() is False:
+            if SceneManager.isCurrentSceneActive() is True:
+                Trace.log("Manager", 0, "PopUp has no entity (maybe group is not attached at scene)")
+            return
         if PopUp.isEntityActivate() is True:
             return
 
