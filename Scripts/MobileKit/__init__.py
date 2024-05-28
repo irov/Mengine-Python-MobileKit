@@ -33,14 +33,6 @@ def onInitialize():
     from MobileKit.PopUpManager import PopUpManager
 
     PopUpContents = [
-        "Profile",
-        "Pause"
-    ]
-
-    if PopUpManager.importPopUpContents("Game.PopUpContents", PopUpContents) is False:
-        return False
-
-    PopUpContents = [
         "Credits"
         , "Settings"
         , "TechSupport"
