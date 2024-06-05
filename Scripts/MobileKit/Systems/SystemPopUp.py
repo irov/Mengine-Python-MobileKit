@@ -71,7 +71,7 @@ class SystemPopUp(System):
             return
         with TaskManager.createTaskChain(Name="PopUp_CloseFlow") as tc:
             tc.addTask('TaskSceneLayerGroupEnable', LayerName="PopUp", Value=False)
-            tc.addTask("TaskFadeOut", GroupName="FadeUI", To=0.5, Time=250.0)
+            tc.addTask("TaskFadeOut", GroupName="FadeUI", To=0.0, Time=250.0)
 
     def _cbSceneActivate(self, scene_name):
         PopUp = DemonManager.getDemon("PopUp")
