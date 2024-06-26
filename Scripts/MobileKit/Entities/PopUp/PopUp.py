@@ -148,7 +148,6 @@ class PopUp(BaseEntity):
 
         self._content.getEntityNode().setWorldPosition(Mengine.vec2f(x_center, y_center))
 
-
     # scopes
 
     def _scopeCloseLastContent(self, source):

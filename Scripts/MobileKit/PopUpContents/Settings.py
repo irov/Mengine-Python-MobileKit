@@ -205,8 +205,10 @@ class Settings(PopUpContent):
     def _scopeLanguage(self, scope):
         scope.addNotify(Notificator.onPopUpOpen, "languages")
 
-    def _scopeCredits(self, scope):
-        scope.addNotify(Notificator.onPopUpOpen, "credits")
+    def _scopeCredits(self, source):
+        # scope.addNotify(Notificator.onPopUpOpen, "credits")
+        source.addNotify(Notificator.onChangeScene, "Credits")
+        source.addNotify(Notificator.onPopUpClose, Settings.popup_id)
 
     def _scopeTechSupport(self, scope):
         scope.addNotify(Notificator.onPopUpOpen, "tech_support")
