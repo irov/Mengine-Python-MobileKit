@@ -123,7 +123,7 @@ class Settings(PopUpContent):
         self.buttons = {}
 
         for checkbox in self.checkboxes.values():
-            checkbox.returnToParent()
+            checkbox.onDestroy()
         self.checkboxes = {}
 
     def __adjustSlotsPosition(self):

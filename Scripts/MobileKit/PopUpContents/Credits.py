@@ -11,6 +11,7 @@ class Credits(PopUpContent):
 
     def __init__(self):
         super(Credits, self).__init__()
+        self.movies = []
 
     def _onInitialize(self):
         return
@@ -34,6 +35,7 @@ class Credits(PopUpContent):
         for param in CreditsManager.getParams():
 
             credit_object = PrototypeManager.generateObjectUnique(param.Movie2Prototype[7:])
+            self.movies.append(credit_object)
             credit_object.setEnable(True)
 
             node = credit_object.getEntityNode()
@@ -49,4 +51,12 @@ class Credits(PopUpContent):
         self.content.setEnable(False)
 
     def _onFinalize(self):
-        return
+        self.content = None
+
+        if len(self.movies) == 0:
+            return
+
+        for movie in self.movies:
+            movie.onDestroy()
+        self.movies = []
+
