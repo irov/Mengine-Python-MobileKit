@@ -20,7 +20,7 @@ def onInitialize():
     from Foundation.ObjectManager import ObjectManager
 
     Types = [
-        "AdvertisingScene"
+        {"name": "AdvertisingScene", "override": True}
         , "Header"
         , "Banner"
         , "PopUp"

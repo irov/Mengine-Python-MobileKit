@@ -57,9 +57,13 @@ class AdjustableScreenUtils(object):
     @staticmethod
     def getHeaderHeight():
         for header_name in AdjustableScreenUtils.__headers:
+            if DemonManager.hasDemon(header_name) is False:
+                continue
+
             demon = DemonManager.getDemon(header_name)
             if demon.isActive() is True:
                 return demon.getHeight()
+
         return 0.0
 
     @staticmethod
@@ -72,7 +76,7 @@ class AdjustableScreenUtils(object):
         if Mengine.hasOption("ignorebanner") is True:
             banner_height = 0.0
         else:
-            banner_height = AdjustableScreenUtils.getActualBannerHeight()
+            banner_height = AdvertisementProvider.getBannerHeight()
             if banner_height is None:
                 banner_height = AdjustableScreenUtils.getPhoneAdaptiveBannerHeight(game_width)
 
