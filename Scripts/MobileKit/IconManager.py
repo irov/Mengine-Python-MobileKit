@@ -17,7 +17,7 @@ class IconManager(object):
         return object
 
     @staticmethod
-    def generateIcon(name, size):
+    def generateIcon(name, size=None):
         icon_db = DatabaseManager.getDatabase(
             IconManager.s_db_module,
             IconManager.s_icons_db_name
@@ -57,7 +57,7 @@ class IconManager(object):
         return icon
 
     @staticmethod
-    def generateIconOnNode(node, name, size):
+    def generateIconOnNode(node, name, size=None):
         if node is None:
             Trace.log("Manager", 0,
                 "[IconManager|generateIconOnNode]"
