@@ -83,13 +83,17 @@ class PrototypeManager(object):
             return None
 
         icon = None
-        if params_orm.Icon.get("Prototype") is not None:
-            icon = IconManager.generateIcon(params_orm.Icon["Prototype"], params_orm.Icon["Size"])
+        param_prototype = params_orm.Icon.get("Prototype")
+        param_size = params_orm.Icon.get("Size")
+        param_slot = params_orm.Icon.get("Slot")
+
+        if param_prototype is not None:
+            icon = IconManager.generateIcon(param_prototype, param_size)
 
             if params_orm.Type == "Movie2Button":
-                movie.addChildToSlot(icon.getEntityNode(), params_orm.Icon["Slot"])
+                movie.addChildToSlot(icon.getEntityNode(), param_slot)
             else:
-                slot = movie.getMovieSlot(params_orm.Icon["Slot"])
+                slot = movie.getMovieSlot(param_slot)
                 slot.addChild(icon.getEntityNode())
 
         container = ObjectContainer(movie, icon)
@@ -124,8 +128,10 @@ class ObjectContainer(object):
     def getEntityNode(self):
         return self.movie.getEntityNode()
 
+    def getCompositionBounds(self):
+        return self.movie.getCompositionBounds()
+
     def setParam(self, key, value):
         self.movie.setParam(key, value)
         if self.icon is not None:
             self.icon.setParam(key, value)
-
