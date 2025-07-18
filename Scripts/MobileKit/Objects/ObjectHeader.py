@@ -12,6 +12,19 @@ class ObjectHeader(DemonObject):
         height = bbox.maximum.y - bbox.minimum.y
         return height
 
+    def getSize(self):
+        if self.isActive() is False:
+            Trace.log("Object", 0, "Header entity is not active!")
+            return Mengine.vec2f(0.0, 0.0)
+
+        content = self.getObject("Movie2_Content")
+        bbox = content.getCompositionBounds()
+
+        width = bbox.maximum.x - bbox.minimum.x
+        height = bbox.maximum.y - bbox.minimum.y
+
+        return Mengine.vec2f(width, height)
+
     def getComponentByName(self, name):
         if self.isActive() is False:
             Trace.log("Object", 0, "Header entity is not active!")
