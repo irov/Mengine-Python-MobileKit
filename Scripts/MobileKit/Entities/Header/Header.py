@@ -18,8 +18,8 @@ class Header(BaseEntity):
             return
         self.movie_content = self.object.getObject(MOVIE_CONTENT_NAME)
 
-        self.adjustSlotsPositions()
         self.setup()
+        self.adjustSlotsPositions()
 
     def _onActivate(self):
         for elem in self.content.values():

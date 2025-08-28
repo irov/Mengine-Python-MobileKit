@@ -47,3 +47,10 @@ class ComponentContainer(HeaderComponent):
 
         self.prototype_name = None
         self.slot_name = None
+
+    def getSize(self):
+        if self.container is None:
+            return Mengine.vec2f(0.0, 0.0)
+
+        size = self.container.getSize()
+        return size
