@@ -1,9 +1,9 @@
+from Foundation.Manager import Manager
 from Foundation.GroupManager import GroupManager
 from Foundation.DatabaseManager import DatabaseManager
 from MobileKit.IconManager import IconManager
 
-
-class PrototypeManager(object):
+class PrototypeManager(Manager):
     s_group = "UIStore"
     s_db_module = "Database"
     s_db_name = "Prototypes"

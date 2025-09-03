@@ -1,9 +1,8 @@
+from Foundation.Manager import Manager
 from Foundation.DatabaseManager import DatabaseManager
-
 
 ORDER_MODE_RANDOMLY = 1
 ORDER_MODE_ALTERNATIVELY = 2
-
 
 class SoundPack(object):
     def __init__(self, mute_music, mute_percentage, order_mode, sounds):
@@ -15,8 +14,7 @@ class SoundPack(object):
     def __repr__(self):
         return "SoundPack {!r} order mode with {} sounds".format(self.order_mode, len(self.sounds))
 
-
-class SoundEffectsManager(object):
+class SoundEffectsManager(Manager):
     s_soundEffects = {}
     s_exclusion_funcs = {}
     s_lastSounds = {}

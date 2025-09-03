@@ -1,8 +1,8 @@
+from Foundation.Manager import Manager
 from Foundation.DatabaseManager import DatabaseManager
 from Foundation.ObjectManager import ObjectManager
 
-
-class IconManager(object):
+class IconManager(Manager):
     s_db_module = "Database"
     s_icons_db_name = "Icons"
 

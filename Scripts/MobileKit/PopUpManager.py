@@ -1,5 +1,6 @@
-class PopUpManager(object):
+from Foundation.Manager import Manager
 
+class PopUpManager(Manager):
     s_contents = {}
 
     @staticmethod
