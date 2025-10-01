@@ -196,11 +196,11 @@ class Settings(PopUpContent):
 
     def _scopeMuteSoundHandler(self, source, checkbox, value):
         source.addFunction(checkbox.setParam, "Value", value)
-        source.addFunction(Mengine.changeCurrentAccountSetting, "MuteSound", unicode(value))
+        source.addFunction(Mengine.changeCurrentAccountSettingBool, "MuteSound", value)
 
     def _scopeMuteMusicHandler(self, source, checkbox, value):
         source.addFunction(checkbox.setParam, "Value", value)
-        source.addFunction(Mengine.changeCurrentAccountSetting, "MuteMusic", unicode(value))
+        source.addFunction(Mengine.changeCurrentAccountSettingBool, "MuteMusic", value)
 
     def _scopeLanguage(self, scope):
         scope.addNotify(Notificator.onPopUpOpen, "languages")
