@@ -55,7 +55,7 @@ def onInitialize():
         if isGlobal is True:
             return
 
-    AccountManager.setCreateAccount(accountSetuper)
+    AccountManager.addCreateAccountExtra(accountSetuper)
     """
 
     return True
