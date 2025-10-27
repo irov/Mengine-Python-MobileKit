@@ -23,7 +23,7 @@ class PopUp(BaseEntity):
     def declareORM(Type):
         BaseEntity.declareORM(Type)
 
-        Type.addActionActivate(Type, "OpenPopUps",
+        Type.addActionActivate("OpenPopUps",
                                Append=PopUp._cbAppendOpenPopUps,
                                Remove=PopUp._cbRemoveOpenPopUps)
 

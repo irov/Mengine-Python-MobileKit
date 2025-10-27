@@ -9,7 +9,7 @@ class Banner(BaseEntity):
     @staticmethod
     def declareORM(Type):
         BaseEntity.declareORM(Type)
-        Type.addActionActivate(Type, "Show", Update=Banner._updateShow)
+        Type.addActionActivate("Show", Update=Banner._updateShow)
 
     def _updateShow(self, state):
         if state is True:

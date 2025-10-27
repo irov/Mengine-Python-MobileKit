@@ -10,11 +10,11 @@ class ObjectAdvertisingScene(DemonObject):
     @staticmethod
     def declareORM(Type):
         DemonObject.declareORM(Type)
-        Type.addParam(Type, "NextScene")
-        Type.addParam(Type, "CacheNoAds")
-        Type.addParam(Type, "Mode")
-        Type.addParam(Type, "AdUnitName")
-        Type.addParam(Type, "AdPointName")
+        Type.declareParam("NextScene")
+        Type.declareParam("CacheNoAds")
+        Type.declareParam("Mode")
+        Type.declareParam("AdUnitName")
+        Type.declareParam("AdPointName")
 
     def _onParams(self, params):
         super(ObjectAdvertisingScene, self)._onParams(params)

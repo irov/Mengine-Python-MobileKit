@@ -5,7 +5,7 @@ class ObjectBanner(DemonObject):
     @staticmethod
     def declareORM(Type):
         DemonObject.declareORM(Type)
-        Type.addParam(Type, "Show", True)
+        Type.declareParam("Show", True)
 
     def _onParams(self, params):
         super(ObjectBanner, self)._onParams(params)

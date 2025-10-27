@@ -36,11 +36,11 @@ class AdvertisingScene(BaseEntity):
     @staticmethod
     def declareORM(Type):
         BaseEntity.declareORM(Type)
-        Type.addAction(Type, "NextScene")
-        Type.addAction(Type, "CacheNoAds")
-        Type.addAction(Type, "Mode")
-        Type.addAction(Type, "AdUnitName")
-        Type.addAction(Type, "AdPointName")
+        Type.addAction("NextScene")
+        Type.addAction("CacheNoAds")
+        Type.addAction("Mode")
+        Type.addAction("AdUnitName")
+        Type.addAction("AdPointName")
 
     def _onPreparation(self):
         if _DEVELOPMENT is True and self.object.hasObject("Movie2_Content"):

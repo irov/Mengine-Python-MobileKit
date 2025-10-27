@@ -7,7 +7,7 @@ class ObjectPopUp(DemonObject):
     def declareORM(Type):
         DemonObject.declareORM(Type)
 
-        Type.addParam(Type, "OpenPopUps")
+        Type.declareParam("OpenPopUps")
 
     def _onParams(self, params):
         super(ObjectPopUp, self)._onParams(params)
