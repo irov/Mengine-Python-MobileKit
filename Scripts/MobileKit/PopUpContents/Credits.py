@@ -33,16 +33,10 @@ class Credits(PopUpContent):
         slot.setWorldPosition(Mengine.vec2f(x_center,  viewport.begin.y))
 
         for param in CreditsManager.getParams():
-
-            credit_object = PrototypeManager.generateObjectUnique(param.Movie2Prototype[7:])
-            self.movies.append(credit_object)
-            credit_object.setEnable(True)
-
-            node = credit_object.getEntityNode()
-            node.removeFromParent()
-            slot.addChild(node)
-
+            credit_object = PrototypeManager.generateObjectUniqueOnNode(slot, param.Movie2Prototype[7:])
             credit_object.setPosition((0, param.OffsetTop))
+
+            self.movies.append(credit_object)
 
     def _onActivate(self):
         self.content.setEnable(True)
