@@ -1,12 +1,9 @@
-from Foundation.Entity.BaseEntity import BaseEntity
+from Foundation.BaseEntity import BaseEntity
 
 MOVIE_CONTENT_NAME = "Movie2_Content"
 
-
 class Header(BaseEntity):
-
     """ Parent class for own Header """
-
     def __init__(self):
         super(Header, self).__init__()
         self.movie_content = None

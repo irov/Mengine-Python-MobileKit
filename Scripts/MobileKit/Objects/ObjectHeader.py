@@ -1,8 +1,6 @@
-from Foundation.Object.DemonObject import DemonObject
-
+from Foundation.DemonObject import DemonObject
 
 class ObjectHeader(DemonObject):
-
     def getHeight(self):
         if self.isActive() is False:
             Trace.log("Object", 0, "Header entity is not active!")

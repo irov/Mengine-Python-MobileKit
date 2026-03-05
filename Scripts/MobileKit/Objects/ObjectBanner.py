@@ -1,5 +1,4 @@
-from Foundation.Object.DemonObject import DemonObject
-
+from Foundation.DemonObject import DemonObject
 
 class ObjectBanner(DemonObject):
     @staticmethod

@@ -1,8 +1,6 @@
-from Foundation.Object.DemonObject import DemonObject
-
+from Foundation.DemonObject import DemonObject
 
 class ObjectPopUp(DemonObject):
-
     @staticmethod
     def declareORM(Type):
         DemonObject.declareORM(Type)
