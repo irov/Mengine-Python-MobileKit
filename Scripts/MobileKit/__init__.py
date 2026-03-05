@@ -1,4 +1,6 @@
 def onInitialize():
+    Trace.msg_dev("MobileKit onInitialize")
+
     from Foundation.Notificator import Notificator
 
     identities = [
@@ -61,6 +63,8 @@ def onInitialize():
 
 
 def onFinalize():
+    Trace.msg_dev("MobileKit onFinalize")
+
     from MobileKit.PopUpManager import PopUpManager
     PopUpManager.onFinalize()
 
