@@ -16,18 +16,16 @@ def onInitialize():
     ]
     TraceManager.addTraces(Traces)
 
-    from Foundation.EntityManager import EntityManager
-    from Foundation.ObjectManager import ObjectManager
-
-    Types = [
-        {"name": "AdvertisingScene", "override": True}
+    EntityTypes = [
+        {"Type": "AdvertisingScene", "Override": True}
         , "Header"
         , "Banner"
         , "PopUp"
     ]
-    if EntityManager.importEntities("MobileKit.Entities", Types) is False:
-        return False
-    if ObjectManager.importObjects("MobileKit.Objects", Types) is False:
+
+    from Foundation.Bootstrapper import Bootstrapper
+
+    if Bootstrapper.loadEntities("MobileKit", EntityTypes) is False:
         return False
 
     from MobileKit.PopUpManager import PopUpManager
@@ -38,6 +36,7 @@ def onInitialize():
         , "TechSupport"
         , "Languages"
     ]
+
     if PopUpManager.importPopUpContents("MobileKit.PopUpContents", PopUpContents) is False:
         return False
 
