@@ -125,43 +125,25 @@ class TechSupport(PopUpContent):
     def sendSupportMail(self):
         receiver = Mengine.getGameParamUnicode("TechnicalSupportEmail")
         subject = u"[{}] Technical Support Request".format(Mengine.getProjectName())
-        body = self.getSupportMessageBody()
+        technically = self.getSupportTechnically()
 
         if _DEVELOPMENT is True:
-            Trace.msg("DUMMY send support mail:\n  Receiver: {!r}\n  Subject: {!r}"
-                      "\n{}\n  (Include player save)".format(receiver, subject, body))
+            Trace.msg("send support mail:\n  Receiver: {!r}\n  Subject: {!r}"
+                      "\n Technically: {!r}\n  (Include player save)".format(receiver, subject, technically))
 
         Mengine.openMail(receiver, subject, body)
 
-    # todo for @eclipse7723: make it as a template in Foundation for all projects
-    def getSupportMessageBody(self):
-        mode = "dev" if _DEVELOPMENT is True else "master"
-        playfab_id = str(Mengine.getCurrentAccountSetting("PlayFabId"))
+    def getSupportTechnically(self):
+        playfab_id = Mengine.getCurrentAccountSetting("PlayFabId")
 
         kwargs = dict(
-            BUILD_VERSION=_BUILD_VERSION,
-            BUILD_VERSION_NUMBER=_BUILD_VERSION_NUMBER,
-            BUILD_VERSION_CODE=_BUILD_VERSION,
-            PLAYFAB_ID=playfab_id,
-            OS_NAME=Utils.getCurrentPlatform(),
-            OS_VERSION="unknown",
-            PLAYFAB_REVISION_MODE=mode,
+            PLAYFAB_ID=playfab_id
         )
-        if _ANDROID:
-            kwargs["OS_VERSION"] = Mengine.androidStringMethod("Application", "getOSVersion")
-            kwargs["BUILD_VERSION_CODE"] = Mengine.androidIntegerMethod("Application", "getVersionCode")
 
-        body = u"""
-
------ Please Describe Your Issue Above Here -----
-
-        Important Details for our Support Team:
-        * build version: {BUILD_VERSION} ({BUILD_VERSION_NUMBER})
-        * version code: {BUILD_VERSION_CODE}
-        * playfab id: {PLAYFAB_ID}
-        * playfab revision: {PLAYFAB_REVISION_MODE}
-        * {OS_NAME} version: {OS_VERSION}
+        technically = u"""
+        [PlayFab Info]
+        ID: {PLAYFAB_ID}
         """.format(**kwargs)
 
-        return body
+        return technically
 
