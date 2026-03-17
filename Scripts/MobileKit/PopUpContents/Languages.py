@@ -1,5 +1,5 @@
 from MobileKit.PopUpContent import PopUpContent
-from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 # todo: from Foundation.LanguagesManager import LanguagesManager
 from Foundation.SystemManager import SystemManager
 from Foundation.TaskManager import TaskManager

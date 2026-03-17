@@ -1,6 +1,6 @@
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
-from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 
 BUILD_VERSION_BOOL = Mengine.getGameParamBool("ShowBuildVersion", True)
 PLAYFAB_ID_BOOL = Mengine.getGameParamBool("ShowPlayFabId", True)

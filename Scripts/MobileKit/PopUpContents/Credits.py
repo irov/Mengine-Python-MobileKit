@@ -1,7 +1,7 @@
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
 from MobileKit.CreditsManager import CreditsManager
-from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 
 
 class Credits(PopUpContent):

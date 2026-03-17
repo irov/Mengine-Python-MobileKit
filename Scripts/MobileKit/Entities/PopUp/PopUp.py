@@ -1,7 +1,7 @@
 from Foundation.BaseEntity import BaseEntity
 from Foundation.TaskManager import TaskManager
 from MobileKit.PopUpManager import PopUpManager
-from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 
 SLOT_CLOSE = "close"
 SLOT_BACK = "back"

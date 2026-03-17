@@ -42,7 +42,7 @@ def onInitialize():
     if PopUpManager.importPopUpContents("MobileKit.PopUpContents", PopUpContents) is False:
         return False
 
-    from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+    from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 
     Headers = [
         "Header"

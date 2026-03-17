@@ -1,7 +1,7 @@
 from Foundation.DefaultManager import DefaultManager
 from Foundation.TaskManager import TaskManager
 from Foundation.Providers.AdvertisementProvider import AdvertisementProvider
-from MobileKit.AdjustableScreenUtils import AdjustableScreenUtils
+from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
 
