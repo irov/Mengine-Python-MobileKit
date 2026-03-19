@@ -142,11 +142,10 @@ class Languages(PopUpContent):
             Mengine.changeCurrentAccountSetting("SelectedLanguage", unicode(locale))
             SystemManager.getSystem("SystemAutoLanguage").disable()
 
-        def cbOnSceneRestartChangeLocale(scene, isActive, isError):
-            if scene is None:
-                Mengine.setLocale(locale)
+        def __cbOnSceneRestartChangeLocale():
+            Mengine.setLocale(locale)
 
-        Mengine.restartCurrentScene(True, cbOnSceneRestartChangeLocale)
+        SceneManager.restartCurrentScene(None, cb_removed=__cbOnSceneRestartChangeLocale)
 
     def _checkSlot(self, slot_name):
         if self.content.hasSlot(slot_name) is False:
