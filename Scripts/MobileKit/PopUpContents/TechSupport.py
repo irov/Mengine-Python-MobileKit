@@ -131,7 +131,7 @@ class TechSupport(PopUpContent):
             Trace.msg("send support mail:\n  Receiver: {!r}\n  Subject: {!r}"
                       "\n Technically: {!r}\n  (Include player save)".format(receiver, subject, technically))
 
-        Mengine.openMail(receiver, subject, body)
+        Mengine.openMail(receiver, subject, technically)
 
     def getSupportTechnically(self):
         playfab_id = Mengine.getCurrentAccountSetting("PlayFabId")
