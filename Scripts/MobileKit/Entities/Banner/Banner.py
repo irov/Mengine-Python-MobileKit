@@ -13,10 +13,10 @@ class Banner(BaseEntity):
 
     def _updateShow(self, state):
         if state is True:
-            AdvertisementProvider.showBanner(AdUnitName="Banner")
+            AdvertisementProvider.showBanner()
         else:
-            AdvertisementProvider.hideBanner(AdUnitName="Banner")
+            AdvertisementProvider.hideBanner()
 
     def _onDeactivate(self):
-        # AdvertisementProvider.hideBanner(AdUnitName="Banner")
+        # AdvertisementProvider.hideBanner()
         pass

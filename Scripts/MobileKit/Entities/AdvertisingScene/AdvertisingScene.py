@@ -89,25 +89,24 @@ class AdvertisingScene(BaseEntity):
 
     def _scopeRewarded(self, source):
         with source.addParallelTask(2) as (response, request):
-            with response.addRaceTask(3) as (response_ok, response_fail, response_skip):
-                response_ok.addListener(Notificator.onAdvertRewarded)
-                response_fail.addListener(Notificator.onAdvertDisplayFailed)
-                response_skip.addListener(Notificator.onAdvertSkipped)
-            request.addFunction(AdvertisementProvider.showAdvert, "Rewarded", self.AdUnitName)
+            with response.addRaceTask(2) as (response_ok, response_fail):
+                response_ok.addListener(Notificator.onRewardedAdUserRewarded, Filter=lambda params: params.get("placement") == self.AdUnitName)
+                response_fail.addListener(Notificator.onRewardedAdShowCompleted, Filter=lambda success, params: success is False and params.get("placement") == self.AdUnitName)
+            request.addFunction(AdvertisementProvider.showRewardedAdvert, self.AdUnitName)
 
     def _scopeInterstitial(self, source):
         with source.addParallelTask(2) as (response, request):
-            with response.addRaceTask(3) as (response_ok, response_fail, response_skip):
-                response_ok.addListener(Notificator.onAdvertHidden)
-                response_fail.addListener(Notificator.onAdvertDisplayFailed)
-            request.addFunction(AdvertisementProvider.showAdvert, "Interstitial", self.AdUnitName)
+            with response.addRaceTask(2) as (response_ok, response_fail):
+                response_ok.addListener(Notificator.onInterstitialAdShowCompleted, Filter=lambda success, params: success is True and params.get("placement") == self.AdUnitName)
+                response_fail.addListener(Notificator.onInterstitialAdShowCompleted, Filter=lambda success, params: success is False and params.get("placement") == self.AdUnitName)
+            request.addFunction(AdvertisementProvider.showInterstitialAdvert, self.AdUnitName)
 
     def _scopeAdPoint(self, source):
         with source.addParallelTask(2) as (response, request):
             # react on advert
             with response.addRaceTask(2) as (hidden, fail):
-                hidden.addListener(Notificator.onAdvertHidden)
-                fail.addListener(Notificator.onAdvertDisplayFailed)
+                hidden.addListener(Notificator.onAdShowCompleted, Filter=lambda ad_type, success, params: success is True and params.get("placement") == self.AdUnitName)
+                fail.addListener(Notificator.onAdShowCompleted, Filter=lambda ad_type, success, params: success is False and params.get("placement") == self.AdUnitName)
 
             # reset counter and show advert
             request.addFunction(AdPointProvider.startAdPoint, self.AdPointName)

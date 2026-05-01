@@ -1,6 +1,6 @@
 from Foundation.DefaultManager import DefaultManager
 from Foundation.TaskManager import TaskManager
-from Foundation.Providers.AdvertisementProvider import AdvertisementProvider
+from Foundation.Providers.ConsentProvider import ConsentProvider
 from Foundation.AdjustableScreenUtils import AdjustableScreenUtils
 from MobileKit.PopUpContent import PopUpContent
 from MobileKit.PrototypeManager import PrototypeManager
@@ -215,6 +215,6 @@ class Settings(PopUpContent):
 
     def _scopeConsentSettingsButton(self, source):
         source.addDelay(300)  # fix for part services spamming
-        source.addFunction(AdvertisementProvider.showConsentFlow)
+        source.addFunction(ConsentProvider.showConsentFlow)
 
 
